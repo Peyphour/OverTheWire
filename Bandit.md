@@ -433,6 +433,47 @@ Use -f if you really want to add them.
 Oh there's a catch ! `git add -f key.txt && git commit -m "." && git push origin` (the password asked is the password for this level).
 The next password will be on the command output !
 
-# Level 32 => 33
+# Level 32 => 33 
 
-`ssh -p 2220 bandit31@bandit.labs.overthewire.org` with the password found. 56a9bf19c63d650ce78e6ec0354ee45e
+`ssh -p 2220 bandit31@bandit.labs.overthewire.org` with the password found.
+
+Ok, so this one is the trickiest of all this series IMO.
+
+Every thing you enter in this shell is executed with every character uppercased. Example :
+
+```
+>> cat /etc/bandit_pass/bandit33
+sh: 1: CAT: not found
+```
+
+We need to get a normal/basic shell, one thing that you notice is that the underlying shell executing the commands is `sh`. In a POSIX shell, there is something named "Positionnal parameters" : https://bash.cyberciti.biz/guide/$0
+One of those parameters is `$0`, and it represents the **command** or **script** name. In this case, the script name is `sh` ! So to get a shell, type `$0` and enter. We now have a shell !
+
+Now that this is done, we still need to get the next password. Luck is with us, because we are bandit33 : 
+```
+$ whoami
+bandit33
+```
+
+Last step : `$ cat /etc/bandit_pass/bandit33`.
+
+# Level 33
+
+`ssh -p 2220 bandit33@bandit.labs.overthewire.org` with the password found.
+
+```
+bandit33@bandit:~$ ls
+README.txt
+```
+
+```
+bandit33@bandit:~$ cat README.txt 
+Congratulations on solving the last level of this game!
+
+At this moment, there are no more levels to play in this game. However, we are constantly working
+on new levels and will most likely expand this game with more levels soon.
+Keep an eye out for an announcement on our usual communication channels!
+In the meantime, you could play some of our other wargames.
+
+If you have an idea for an awesome new level, please let us know!
+```
